@@ -12,8 +12,6 @@ def roman_to_int(roman_string: str):
 
     rep = 0
 
-
-
     for i in range(len(numbers) - 1):
 
         if numbers[i] >= numbers[i+1]:
@@ -23,7 +21,5 @@ def roman_to_int(roman_string: str):
         else:
 
             rep -= numbers[i]
-
-
 
     return rep
