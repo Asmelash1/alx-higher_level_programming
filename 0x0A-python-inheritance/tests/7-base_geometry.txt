@@ -1,265 +1,113 @@
-========================================
-
-  Documentation of 7-base_geometry.py
-
-========================================
+# ===============================================
+# Unit test 7-base_geometry
+# ===============================================
 
 
+import module:
+       >>> BaseGeometry = __import__("7-base_geometry").BaseGeometry
 
-Contains a `BaseGeometry` class with the following methods
+Validate if area:
+       >>> 'area' in dir(BaseGeometry)
+       True
+
+Validate if integer validator:
+       >>> 'integer_validator' in dir(BaseGeometry)
+       True
+
+Call area exception:
+       >>> f = BaseGeometry()
+       >>> f.area()
+       Traceback (most recent call last):
+       Exception: area() is not implemented
+
+Integer validations:
+       >>> f.integer_validator()
+       Traceback (most recent call last):
+       TypeError: integer_validator() missing 2 required positional arguments: 'name' and 'value'
+
+       >>> f.integer_validator(1)
+       Traceback (most recent call last):
+       TypeError: integer_validator() missing 1 required positional argument: 'value'
 
 
+       >>> f.integer_validator(1, 2, 3)
+       Traceback (most recent call last):
+       TypeError: integer_validator() takes 3 positional arguments but 4 were given
 
-`def area(self):`
+Send negative:
+       >>> f.integer_validator("name", -23)
+       Traceback (most recent call last):
+       ValueError: name must be greater than 0
 
+Send zero:
+       >>> f.integer_validator("name", 0)
+       Traceback (most recent call last):
+       ValueError: name must be greater than 0
 
-
-which calculates the area of the `BaseGeometry`
-
-
-
-`def integer_validator(self, name, value):`
-
-
-
-validates the `value` based
-
-
-
-Test cases
-
-==========
-
-
-
->>> BaseGeometry = __import__('7-base_geometry').BaseGeometry
+Correct arguments:
+       >>> f.integer_validator("name", 7)
 
 >>> bg = BaseGeometry()
 
-
-
-Case with a positive value
-
-
-
->>> bg.integer_validator("my_int", 12)
-
->>>
-
-
-
-Case with a negative value
-
-
-
->>> bg.integer_validator("distance", -4)
-
+>>> bg.integer_validator("age",(4,))
 Traceback (most recent call last):
+TypeError: age must be an integer
 
-ValueError: distance must be greater than 0
-
-
-
-Case with a float
-
-
-
->>> bg.integer_validator("year", 8.5)
-
+>>> bg.integer_validator("age",[3])
 Traceback (most recent call last):
+TypeError: age must be an integer
 
-TypeError: year must be an integer
-
-
-
-Case with zero
-
-
-
->>> bg.integer_validator("age", 0)
-
+>>> bg.integer_validator("age",True)
 Traceback (most recent call last):
-
-ValueError: age must be greater than 0
-
+TypeError: age must be an integer
 
 
-Case with a non integer
-
-
-
->>> bg.integer_validator("name", "A!ex")
-
+>>> bg.integer_validator("age",{3, 4})
 Traceback (most recent call last):
+TypeError: age must be an integer
 
-TypeError: name must be an integer
-
-
-
-Case with value as boolean
-
-
-
->>> bg.integer_validator("width", True)
-
+>>> bg.integer_validator("age",None)
 Traceback (most recent call last):
-
-TypeError: width must be an integer
-
-
-
-Case catched output with string value
-
-
-
->>> try:
-
-...     bg.integer_validator("name", "John")
-
-... except Exception as e:
-
-...     print("[{}] {}".format(e.__class__.__name__, e))
-
-...
-
-[TypeError] name must be an integer
-
-
-
-Case catched output with 0 as value
-
-
-
->>> try:
-
-...     bg.integer_validator("age", 0)
-
-... except Exception as e:
-
-...     print("[{}] {}".format(e.__class__.__name__, e))
-
-...
-
-[ValueError] age must be greater than 0
-
-
-
-Case with negative value
-
-
-
->>> try:
-
-...     bg.integer_validator("distance", -4)
-
-... except Exception as e:
-
-...     print("[{}] {}".format(e.__class__.__name__, e))
-
-...
-
-[ValueError] distance must be greater than 0
-
-
-
-Case with float value
-
-
-
->>> try:
-
-...     bg.integer_validator("distance", 4.5)
-
-... except Exception as e:
-
-...     print("[{}] {}".format(e.__class__.__name__, e))
-
-...
-
-[TypeError] distance must be an integer
-
-
-
-Case with calling area function
-
-
-
->>> bg.integer_validator("my_int", 12)
-
->>> bg.area()
-
-Traceback (most recent call last):
-
-Exception: area() is not implemented
-
-
-
-Case with None as value
-
-
-
->>> bg.integer_validator("age", None)
-
-Traceback (most recent call last):
-
 TypeError: age must be an integer
 
 
 
-Case without any arguments
+>>> bg.integer_validator("my_int", 12)
+
+>>> bg.integer_validator("width", 89)
+
+>>> try:
+...     bg.integer_validator("name", "John")
+... except Exception as e:
+...     print("[{}] {}".format(e.__class__.__name__, e))
+[TypeError] name must be an integer
+
+>>> try:
+...     bg.integer_validator("age", 0)
+... except Exception as e:
+...     print("[{}] {}".format(e.__class__.__name__, e))
+[ValueError] age must be greater than 0
 
 
+>>> try:
+...     bg.integer_validator("distance", -4)
+... except Exception as e:
+...     print("[{}] {}".format(e.__class__.__name__, e))
+[ValueError] distance must be greater than 0
 
->>> bg.integer_validator()
 
+>>> bg.area()
 Traceback (most recent call last):
+Exception: area() is not implemented
 
-TypeError: integer_validator() missing 2 required positional arguments: 'name' and 'value'
-
-
-
-Case without value
-
-
-
->>> bg.integer_validator("year")
-
+>>> bg.integer_validator("age")
 Traceback (most recent call last):
-
 TypeError: integer_validator() missing 1 required positional argument: 'value'
 
-
-
-Case with an array as value
-
-
-
->>> bg.integer_validator("day", [7, 3, 5])
-
+>>> bg.integer_validator()
 Traceback (most recent call last):
+TypeError: integer_validator() missing 2 required positional arguments: 'name' and 'value'
 
-TypeError: day must be an integer
-
-
-
-Case with a tuple
-
-
-
->>> bg.integer_validator("day", (7, 3, 5))
-
+>>> bg.integer_validator("Hello", 7, 8)
 Traceback (most recent call last):
-
-TypeError: day must be an integer
-
-
-
-Case with a dictionary
-
-
-
->>> bg.integer_validator("month", {"Jan", "Feb", "Mar"})
-
-Traceback (most recent call last):
-
-TypeError: month must be an integer
+TypeError: integer_validator() takes 3 positional arguments but 4 were given
