@@ -1,21 +1,8 @@
 #!/usr/bin/python3
-
-"""Contains a `BaseGeometry` class"""
-
+""" New class Geometry module """
 
 
-
-
-class BaseGeometry():
-
-    """An empty class"""
-
-    pass
-
-
-
+class BaseGeometry:
+    """ Base Geometry """
     def area(self):
-
-        """Calculate the area of the geometry"""
-
         raise Exception("area() is not implemented")
